@@ -1,8 +1,8 @@
 import { getNews, getUsers } from "@/lib/widget";
 import { CiSearch } from "react-icons/ci";
-import Articles from "../componets/articles";
+import Articles from "../../componets/articles";
 import { Suspense } from "react";
-import Users from "../componets/users";
+import Users from "../../componets/users";
 
 export const dynamic = 'force-dynamic';
 

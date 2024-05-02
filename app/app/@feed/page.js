@@ -1,6 +1,6 @@
 import { HiOutlineSparkles } from "react-icons/hi";
-import Input from "../componets/input";
-import Post from "../componets/posts";
+import Input from "../../componets/input";
+import Post from "../../componets/posts";
 
 export default function FeedPage() {
 
