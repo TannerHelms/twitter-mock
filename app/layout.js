@@ -12,7 +12,7 @@ export default function RootLayout({ children, sidebar, feed, widgets }) {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <div className="flex min-h-screen max-w-7xl mx-auto">
+        <div className="flex min-h-screen max-w-[1700px] mx-auto">
           {sidebar}
           {feed}
           {widgets}
