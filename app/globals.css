@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .hoverEffect {
+    @apply cursor-pointer hover:bg-gray-200 rounded-full w-[52px] md:w-auto h-[52px] md:h-auto p-3;
+  }
+  .btn-blue {
+    @apply bg-blue-400 text-white p-3 rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg;
+  }
+}
