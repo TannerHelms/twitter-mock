@@ -22,7 +22,7 @@ export default function Sidebar() {
     return (
         <div className="hidden sm:flex flex-col p-2 m:items-start fixed h-full">
             {/* Twitter Logo  */}
-            <div className="hoverEffect hover:bg-blue-100 p-3 items-center w-fit mx-auto md:mx-0 rounded-full aspect-square">
+            <div className="hoverEffect flex items-center justify-center px-0 py-0 rounded-full w-16 h-16 hover:bg-blue-200">
                 <Image className="my-auto" width={40} height={40} src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/584px-Logo_of_Twitter.svg.png" />
             </div>
 
