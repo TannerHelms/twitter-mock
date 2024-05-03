@@ -1,11 +1,11 @@
 'use client'
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { CiImageOn } from "react-icons/ci";
 
-export default function ImagePicker() {
+export default function ImagePicker({ pickedImage, setPickedImage }) {
     const imageInput = useRef()
-    const [pickedImage, setPickedImage] = useState(null)
+
     const handleClick = () => {
         imageInput.current.click();
     }
@@ -25,9 +25,7 @@ export default function ImagePicker() {
 
     return (
         <div className="hover:bg-sky-100 rounded-full cursor-pointer size-10 flex items-center justify-center" onClick={handleClick}>
-            <div>
-                {pickedImage && <img src={pickedImage} alt="Imaged selected by user" />}
-            </div>
+            
             <input
                 className="hidden"
                 type="file"
