@@ -13,7 +13,7 @@ export default function PostFormClient({ state }) {
             {pickedImage && <img src={pickedImage} alt="Imaged selected by user" className="object-cover rounded-xl h-[300px] m-auto mt-4" />}
             <div className="flex justify-between pt-3 items-center">
                 <div className="flex space-x-3">
-                    <ImagePicker pickedImage={pickedImage} setPickedImage={setPickedImage} />
+                    <ImagePicker pickedImage={pickedImage} setPickedImage={setPickedImage} state={state} />
                     <div className="hover:bg-sky-100 rounded-full cursor-pointer size-10 flex items-center justify-center">
                         <MdOutlineEmojiEmotions className="h-6 w-6 text-sky-500" />
                     </div>
