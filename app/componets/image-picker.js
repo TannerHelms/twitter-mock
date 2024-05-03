@@ -24,7 +24,7 @@ export default function ImagePicker() {
     }
 
     return (
-        <>
+        <div className="hover:bg-sky-100 rounded-full cursor-pointer size-10 flex items-center justify-center" onClick={handleClick}>
             <div>
                 {pickedImage && <img src={pickedImage} alt="Imaged selected by user" />}
             </div>
@@ -37,9 +37,9 @@ export default function ImagePicker() {
                 ref={imageInput}
                 onChange={handleImageChange}
             />
-            <button type="button" onClick={handleClick} className="p-0">
+            <button type="button" className="p-0">
                 <CiImageOn className="h-6 w-6 text-sky-500" />
             </button>
-        </>
+        </div>
     )
 }
