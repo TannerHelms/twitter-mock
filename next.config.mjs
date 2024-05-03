@@ -2,10 +2,10 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            { hostname: 'upload.wikimedia.org' },
-            { hostname: 'tricky-photoshop.com' },
-            { hostname: 'images.pexels.com' },
-            { hostname: 'randomuser.me' },
+            {
+                protocol: "https",
+                hostname: "**",
+            },
         ],
     },
 };

@@ -14,8 +14,8 @@ export default function Articles({ articles }) {
         <div className="mt-5 text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-full" >
             <h2 className="font-bold text-xl px-4">What&apos;s happening</h2>
             <div className="space-y-5">
-                {articles.slice(0, ct).map((article) => (
-                    <Article key={article} article={article} />
+                {articles.slice(0, ct).map((article, idx) => (
+                    <Article key={idx} article={article} />
                 ))}
             </div>
             <button className="text-blue-300 pl-4 pb-3 hover:text-blue-400" onClick={hanldeClick}>Show more</button>

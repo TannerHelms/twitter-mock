@@ -1,8 +1,11 @@
 import { HiOutlineSparkles } from "react-icons/hi";
 import Input from "../../componets/input";
 import Post from "../../componets/posts";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
 
-export default function FeedPage() {
+export default async function FeedPage() {
+    const data = await auth()
+    const user = data?.user || null;
 
     const posts = [
         {
@@ -35,7 +38,7 @@ export default function FeedPage() {
                 </div>
             </div>
             {/* input  */}
-            <Input />
+            {user && <Input />}
             {posts.map((post) => (
                 <Post key={post.id} post={post} />
             ))}

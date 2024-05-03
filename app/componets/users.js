@@ -12,8 +12,8 @@ export default function Users({ users }) {
         <div className="mt-5 text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-full" >
             <h2 className="font-bold text-xl px-4">Who to follow</h2>
             <div className="">
-                {users.slice(0, ct).map((user) => (
-                    <WidgetUser key={user.name} user={user} />
+                {users.slice(0, ct).map((user, idx) => (
+                    <WidgetUser key={idx} user={user} />
                 ))}
             </div>
             <button className="text-blue-300 pl-4 pb-3 hover:text-blue-400" onClick={hanldeClick}>Show more</button>

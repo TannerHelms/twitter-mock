@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 export default function Article({ article }) {
     return (
@@ -7,7 +8,7 @@ export default function Article({ article }) {
                     <h6 className="font-bold text-sm">{article.title.split("- ")[0]}</h6>
                     <p className="text-gray-500 font-semibold text-xs">{article.source.name}</p>
                 </div>
-                <img className="rounded-xl" src={article.urlToImage} alt="" width={70} height={70} />
+                <Image className="rounded-xl" src={article.urlToImage} alt="article hero" width={70} height={70} />
             </div>
         </a>
     )

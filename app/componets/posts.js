@@ -10,7 +10,7 @@ export default function Post({ post }) {
         <div className="p-3 flex items-start space-x-3">
             {/* Profile Image */}
             <div>
-                <img className="rounded-full h-11 w-11" src={post.userImg} alt="" />
+                <Image className="rounded-full" height={44} width={44} src={post.userImg} alt="post photo" />
             </div>
             <div className="w-full">
                 <div className="flex justify-between">
@@ -28,6 +28,7 @@ export default function Post({ post }) {
                 {/* Post Image */}
                 <div className="relative w-full h-full">
                     <Image
+                        alt="post image"
                         className="rounded-xl"
                         src={post.img}
                         width={0}
