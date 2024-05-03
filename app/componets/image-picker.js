@@ -6,7 +6,7 @@ import { CiImageOn } from "react-icons/ci";
 export default function ImagePicker({ setPickedImage, state }) {
     const imageInput = useRef()
 
-    const handleClick = () => {a
+    const handleClick = () => {
         imageInput.current.click();
     }
 

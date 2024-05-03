@@ -6,6 +6,8 @@ import { useFormState } from 'react-dom';
 import PostFormClient from "./post-form-client";
 import { createPost } from "@/actions/posts";
 import { useEffect, useRef } from "react";
+import { notifications } from "@mantine/notifications";
+import { HiOutlineSparkles } from "react-icons/hi";
 export default function PostForm({ user }) {
     const [state, formAction] = useFormState(createPost, {})
     const textareaRef = useRef()
@@ -13,6 +15,12 @@ export default function PostForm({ user }) {
     useEffect(() => {
         if (state.suceess) {
             textareaRef.current.value = ''
+            notifications.show({
+                title: 'Post Created',
+                message: 'Your post has succesfuly been created!',
+                color: 'teal',
+                icon: <HiOutlineSparkles />
+            })
         }
     }, [state])
     return (

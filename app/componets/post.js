@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
 import Image from "next/image";
 import { FaRegCommentDots, FaRegHeart, FaRegTrashAlt } from "react-icons/fa";
 import { HiOutlineChartBar, HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoShareSocialOutline } from "react-icons/io5";
+import { LikePost } from "./like-post";
 
 export default function Post({ post }) {
     return (
@@ -44,9 +44,7 @@ export default function Post({ post }) {
                     <div className="p-2 rounded-full hover:bg-red-100 cursor-pointer hover:text-red-600">
                         <FaRegTrashAlt className="size-7 w-9" />
                     </div>
-                    <div className="p-2 rounded-full hover:bg-red-100 cursor-pointer hover:text-red-600">
-                        <FaRegHeart className="size-7 w-9" />
-                    </div>
+                    <LikePost post={post} />
                     <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
                         <IoShareSocialOutline className="size-7 w-9" />
                     </div>
@@ -58,3 +56,4 @@ export default function Post({ post }) {
         </div >
     )
 }
+

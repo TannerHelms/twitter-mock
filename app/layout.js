@@ -1,5 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import { Notifications } from '@mantine/notifications';
+
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import SessionWrapper from "./componets/session-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,8 +17,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
+            <head>
+                <ColorSchemeScript />
+            </head>
             <body className={inter.className} suppressHydrationWarning={true}>
-                {children}
+                <MantineProvider>
+                    <Notifications />
+                    <SessionWrapper>
+                        {children}
+                    </SessionWrapper>
+                </MantineProvider>
             </body>
         </html>
     );

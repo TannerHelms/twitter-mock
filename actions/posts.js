@@ -4,9 +4,10 @@ import { auth } from "@/app/api/auth/[...nextauth]/route"
 import { db, storage } from "@/firebase"
 import dayjs from "dayjs"
 import { query } from "express"
-import { addDoc, collection, getDocs, onSnapshot, orderBy, serverTimestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, serverTimestamp, setDoc, updateDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { revalidatePath } from "next/cache"
+import { v4 as uuidv4 } from 'uuid';
 
 export async function createPost(prevState, formData) {
     const content = formData.get('content')
@@ -17,9 +18,8 @@ export async function createPost(prevState, formData) {
 
     const session = await auth();
 
-
     const docRef = await addDoc(collection(db, "posts"), {
-        id: session.user.uid,
+        id: uuidv4(),
         text: content,
         timestamp: serverTimestamp(),
         name: session.user.name,
@@ -45,9 +45,9 @@ export async function getPosts() {
     const q = query(collection(db, "posts"), orderBy("timestamp", "asc"))
     const querySnapshot = await getDocs(collection(db, "posts"))
     let posts = []
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(async (doc) => {
         const data = doc.data()
-        data.timeAgo = dayjs(data.timestamp.toDate()).fromNow()
+        data.ref = doc.id
         posts.push(data)
     });
 
@@ -55,5 +55,27 @@ export async function getPosts() {
         return new Date(b.timestamp.toDate()) - new Date(a.timestamp.toDate())
     })
 
+    posts = posts.map((post) => {
+        post.timestamp = null;
+        return post;
+    })
+
     return posts;
 }
+
+
+export async function likePost(id) {
+    const session = await auth();
+    await setDoc(doc(db, 'posts', id, "likes", session.user.uid), {
+        username: session.user.username
+    })
+    return { success: true }
+}
+
+export async function unlikePost(id) {
+    const session = await auth();
+    await deleteDoc(doc(db, 'posts', id, "likes", session.user.uid), {
+        username: session.user.username
+    })
+    return { success: true }
+}   
