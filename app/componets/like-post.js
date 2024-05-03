@@ -11,7 +11,6 @@ export function LikePost({ post }) {
     const [likes, setLikes] = useState(null)
     const { data: session } = useSession()
 
-    if (session === null) return null
 
     const handleClick = () => {
         if (hasLiked) unlikePost(post.ref)
@@ -19,9 +18,10 @@ export function LikePost({ post }) {
     }
 
     useEffect(() => {
-        if (!likes) return
-        setHasLiked(likes.findIndex((like) => like === session.user.username) !== -1)
-    }, [likes])
+        if (likes && session?.user) {
+            setHasLiked(likes.findIndex((like) => like === session.user.username) !== -1)
+        }
+    }, [likes, session])
 
 
     useEffect(() => {
@@ -33,6 +33,8 @@ export function LikePost({ post }) {
             }
         )
     }, [db, post])
+
+    if (session === null) return null
 
     return (
         <div className='p-2 rounded-full hover:bg-red-100 cursor-pointer hover:text-red-600' onClick={handleClick}>
