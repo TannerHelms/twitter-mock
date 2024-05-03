@@ -49,16 +49,18 @@ export default async function Sidebar() {
             {user && <TweetButton />}
 
             {/* Mini-Profile  */}
-            <div className="hoverEffect text-grey-700 flex items-center justify-center lg:justify-start mt-auto">
-                <Image alt="user Profile" className="rounded-full" width={50} height={50} src={user.image} />
-                <div className="leading-5 ml-3 hidden lg:inline">
-                    <h4 className="font-bold">{user.name}</h4>
-                    <p className="text-gray-500">@{user.username}</p>
+            {user && (
+                <div className="hoverEffect text-grey-700 flex items-center justify-center lg:justify-start mt-auto">
+                    <Image alt="user Profile" className="rounded-full" width={50} height={50} src={user.image} />
+                    <div className="leading-5 ml-3 hidden lg:inline">
+                        <h4 className="font-bold">{user.name}</h4>
+                        <p className="text-gray-500">@{user.username}</p>
+                    </div>
+                    <div className="ml-8 hidden lg:inline">
+                        <HiOutlineDotsHorizontal />
+                    </div>
                 </div>
-                <div className="ml-8 hidden lg:inline">
-                    <HiOutlineDotsHorizontal />
-                </div>
-            </div>
+            )}
         </div>
     )
 }

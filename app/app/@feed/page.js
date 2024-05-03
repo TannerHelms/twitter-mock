@@ -1,5 +1,5 @@
 import { HiOutlineSparkles } from "react-icons/hi";
-import Input from "../../componets/input";
+import PostForm from "../../componets/post-form";
 import Post from "../../componets/posts";
 import { auth } from "@/app/api/auth/[...nextauth]/route";
 
@@ -38,7 +38,7 @@ export default async function FeedPage() {
                 </div>
             </div>
             {/* input  */}
-            {user && <Input />}
+            {user && <PostForm user={user} />}
             {posts.map((post) => (
                 <Post key={post.id} post={post} />
             ))}

@@ -26,7 +26,7 @@ export default function Post({ post }) {
                 {/* Post Text */}
                 <p className="pl-1">{post.text}</p>
                 {/* Post Image */}
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full mt-2">
                     <Image
                         alt="post image"
                         className="rounded-xl"
