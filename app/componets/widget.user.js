@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function WidgetUser({ user }) {
     return (
-        <div className="flex justify-between items-center px-3 py-3 hover:bg-gray-200 transition duration-200">
+        <div className="flex justify-between items-center px-3 py-3 hover:bg-gray-200 transition duration-500 ease-out">
             {/* User Details */}
             <div className="flex gap-1 items-center">
                 <Image className="rounded-full" width={50} height={50} src={user.picture.thumbnail} alt="user thumbnail" />

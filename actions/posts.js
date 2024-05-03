@@ -24,6 +24,7 @@ export async function createPost(prevState, formData) {
         timestamp: serverTimestamp(),
         name: session.user.name,
         username: session.user.username,
+        userId: session.user.uid,
         profileImg: session.user.image,
     })
 
@@ -78,4 +79,14 @@ export async function unlikePost(id) {
         username: session.user.username
     })
     return { success: true }
-}   
+}
+
+export async function deletePost(id, postUserId) {
+    const session = await auth();
+    if (session.user.uid === postUserId) {
+        await deleteDoc(doc(db, 'posts', id))
+        revalidatePath('/app', 'layout')
+        return { success: true }
+    }
+    return { error: "You can only delete your own posts" }
+}

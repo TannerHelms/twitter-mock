@@ -3,8 +3,9 @@ import { FaRegCommentDots, FaRegHeart, FaRegTrashAlt } from "react-icons/fa";
 import { HiOutlineChartBar, HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { LikePost } from "./like-post";
+import { DeletePostButton } from "./delete-post-button";
 
-export default function Post({ post }) {
+export default function Post({ post, user }) {
     return (
         <div className="p-3 flex items-start space-x-3">
             {/* Profile Image */}
@@ -37,14 +38,18 @@ export default function Post({ post }) {
                     />
                 </div>
                 {/* Post Icons */}
-                <div className="flex justify-between p-2 text-gray-500">
-                    <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
-                        <FaRegCommentDots className="size-7 w-9 " />
-                    </div>
-                    <div className="p-2 rounded-full hover:bg-red-100 cursor-pointer hover:text-red-600">
-                        <FaRegTrashAlt className="size-7 w-9" />
-                    </div>
-                    <LikePost post={post} />
+                <div className={`flex ${user ? "justify-between" : "m-auto w-fit space-x-4"} p-2 text-gray-500`}>
+                    {user && (
+                        <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
+                            <FaRegCommentDots className="size-7 w-9 " />
+                        </div>
+                    )}
+                    {user && post.userId === user.uid && (
+                        <DeletePostButton post={post} />
+                    )}
+                    {user && (
+                        <LikePost post={post} />
+                    )}
                     <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
                         <IoShareSocialOutline className="size-7 w-9" />
                     </div>
@@ -56,4 +61,6 @@ export default function Post({ post }) {
         </div >
     )
 }
+
+
 

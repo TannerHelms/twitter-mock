@@ -3,6 +3,8 @@ import PostForm from "../../componets/post-form";
 import Post from "../../componets/post";
 import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { getPosts } from "@/actions/posts";
+import { AnimatePresence, motion } from "framer-motion";
+import { Posts } from "@/app/componets/posts";
 
 export default async function FeedPage() {
     const posts = await getPosts();
@@ -20,10 +22,9 @@ export default async function FeedPage() {
                 </div>
                 {/* input  */}
                 {user && <PostForm user={user} />}
-                {posts.map((post) => (
-                    <Post key={post.id} post={post} />
-                ))}
+                <Posts user={user} posts={posts} />
             </div>
         </>
     )
 }
+
