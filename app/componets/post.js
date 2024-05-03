@@ -4,6 +4,7 @@ import { HiOutlineChartBar, HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { LikePost } from "./like-post";
 import { DeletePostButton } from "./delete-post-button";
+import { CommentButton } from "./comment-button";
 
 export default function Post({ post, user }) {
     return (
@@ -17,7 +18,7 @@ export default function Post({ post, user }) {
                     {/* User Info */}
                     <div className="flex space-x-3">
                         <h4 className="font-bold">{post.name}</h4>
-                        <p className="text-gray-500">{post.username}<span className="text-gray-500"> · {post.timeAgo}</span></p>
+                        <p className="text-gray-500">@{post.username}<span className="text-gray-500"> · {post.timeAgo}</span></p>
                     </div>
                     <div className="ml-8 hidden md:inline">
                         <HiOutlineDotsHorizontal />
@@ -40,9 +41,7 @@ export default function Post({ post, user }) {
                 {/* Post Icons */}
                 <div className={`flex ${user ? "justify-between" : "m-auto w-fit space-x-4"} p-2 text-gray-500`}>
                     {user && (
-                        <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
-                            <FaRegCommentDots className="size-7 w-9 " />
-                        </div>
+                        <CommentButton post={post} user={user} />
                     )}
                     {user && post.userId === user.uid && (
                         <DeletePostButton post={post} />
@@ -61,6 +60,8 @@ export default function Post({ post, user }) {
         </div >
     )
 }
+
+
 
 
 

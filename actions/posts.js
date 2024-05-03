@@ -39,7 +39,6 @@ export async function createPost(prevState, formData) {
     return { suceess: true }
 }
 
-
 export async function getPosts() {
     var relativeTime = require('dayjs/plugin/relativeTime')
     dayjs.extend(relativeTime)
@@ -49,6 +48,7 @@ export async function getPosts() {
     querySnapshot.forEach(async (doc) => {
         const data = doc.data()
         data.ref = doc.id
+        data.timeAgo = dayjs(data.timestamp.toDate()).fromNow()
         posts.push(data)
     });
 
