@@ -7,7 +7,7 @@ import { getPosts } from "@/actions/posts";
 export default async function FeedPage() {
     const posts = await getPosts();
     const data = await auth()
-    const user = data?.user || null;
+    const user = data?.user;
     return (
         <>
             <div className="lg:ml-[300px] border-l border-r sm:ml-[73px] flex-grow  xl:max-w-[650px] xl:ml-[370px] border-gray-200">
