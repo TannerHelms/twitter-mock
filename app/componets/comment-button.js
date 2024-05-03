@@ -1,7 +1,11 @@
-import { Avatar, Divider, Modal, Timeline } from "@mantine/core";
+'use client'
+import { Divider, Modal, Timeline } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import Image from "next/image";
+import { useRef } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import PostFormClient from "./post-form-client";
 
 const comments = [
     {
@@ -26,7 +30,7 @@ const comments = [
 
 export function CommentButton({ post, user }) {
     const [opened, { open, close }] = useDisclosure(false);
-    console.log(user)
+    const textareaRef = useRef()
     return (
         <>
             <Modal opened={opened} onClose={close} withCloseButton={false} padding={0}>
@@ -38,7 +42,7 @@ export function CommentButton({ post, user }) {
                     </div>
                     <Divider />
                     <div className="py-3 px-5">
-                        <Timeline bulletSize={24}>
+                        <Timeline bulletSize={30}>
                             {comments.map((comment, index) => (
                                 <Timeline.Item
                                     key={index}
@@ -49,17 +53,30 @@ export function CommentButton({ post, user }) {
                                         </div>
                                     )}
                                     bullet={
-                                        <Avatar
-                                            size={22}
-                                            radius="xl"
-                                            src={user.image}
-                                            alt="user thumbnail"
-                                        />
+                                        <div className="absoltue p-0 m-0">
+                                            <Image className="rounded-full" src={user.image} fill />
+                                        </div>
                                     }
                                 >
                                     <h1>{comment.content}</h1>
                                 </Timeline.Item>
                             ))}
+                            <Timeline.Item
+                                title={(
+                                    <form className="w-full">
+                                        <div className="w-full divide-y divide-gray-200">
+                                            <textarea name="content" ref={textareaRef} className="p-0 w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700" cols="30" rows="2" placeholder="What's happening?"></textarea>
+                                            <PostFormClient state={{ error: null }} comment={true} />
+                                        </div>
+                                    </form>
+                                )}
+                                bullet={
+                                    <div className="absoltue p-0 m-0">
+                                        <Image className="rounded-full" src={user.image} fill />
+                                    </div>
+                                }
+                            >
+                            </Timeline.Item>
                         </Timeline>
                     </div>
                 </div>

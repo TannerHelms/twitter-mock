@@ -1,7 +1,7 @@
 'use client'
 import { useFormStatus } from 'react-dom';
 
-export default function FormSubmit() {
+export default function FormSubmit({ comment }) {
     const status = useFormStatus();
 
     if (status.pending) {
@@ -13,6 +13,6 @@ export default function FormSubmit() {
     }
 
     return (
-        <button type="submit" className="btn-blue w-20 h-8 p-0">Tweet</button>
+        <button type="submit" className="btn-blue w-20 h-8 p-0">{comment ? 'Reply' : "Tweet"}</button>
     )
 }

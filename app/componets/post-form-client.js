@@ -1,16 +1,14 @@
-'use client'
-
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import FormSubmit from "./form-submit";
 import ImagePicker from "./image-picker";
 import { useState } from "react";
 
-export default function PostFormClient({ state }) {
+export default function PostFormClient({ state, comment = false }) {
     const [pickedImage, setPickedImage] = useState(null)
     return (
         <div>
 
-            {pickedImage && <img src={pickedImage} alt="Imaged selected by user" className="object-cover rounded-xl h-[300px] m-auto mt-4" />}
+            {pickedImage && <img src={pickedImage} alt="Imaged selected by user" className={`object-cover rounded-xl h-[300px] m-auto mt-4 ${comment && 'h-[150px]'}`} />}
             <div className="flex justify-between pt-3 items-center">
                 <div className="flex space-x-3">
                     <ImagePicker pickedImage={pickedImage} setPickedImage={setPickedImage} state={state} />
@@ -19,7 +17,7 @@ export default function PostFormClient({ state }) {
                     </div>
                 </div>
                 {state.error && <p className="text-red-500">{state.error}</p>}
-                <FormSubmit />
+                <FormSubmit comment={comment} />
             </div>
         </div >
     )
