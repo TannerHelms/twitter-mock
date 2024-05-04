@@ -1,10 +1,8 @@
+import { getPosts } from "@/actions/posts";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { Posts } from "@/app/componets/posts";
 import { HiOutlineSparkles } from "react-icons/hi";
 import PostForm from "../../componets/post-form";
-import Post from "../../componets/post";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
-import { getPosts } from "@/actions/posts";
-import { AnimatePresence, motion } from "framer-motion";
-import { Posts } from "@/app/componets/posts";
 
 export default async function FeedPage() {
     const posts = await getPosts();

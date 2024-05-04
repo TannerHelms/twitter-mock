@@ -42,7 +42,6 @@ export async function createPost(prevState, formData) {
 export async function getPosts() {
     var relativeTime = require('dayjs/plugin/relativeTime')
     dayjs.extend(relativeTime)
-    const q = query(collection(db, "posts"), orderBy("timestamp", "asc"))
     const querySnapshot = await getDocs(collection(db, "posts"))
     let posts = []
     querySnapshot.forEach(async (doc) => {
@@ -60,7 +59,6 @@ export async function getPosts() {
         post.timestamp = null;
         return post;
     })
-
     return posts;
 }
 
@@ -89,4 +87,38 @@ export async function deletePost(id, postUserId) {
         return { success: true }
     }
     return { error: "You can only delete your own posts" }
+}
+
+export async function createComment(bind, _, formData) {
+    const content = formData.get('content')
+    const image = formData.get('image')
+    const postRef = bind[0]
+    const userUid = bind[1]
+
+    if (content.trim().length === 0) return { error: "Message is required" }
+
+    if (!postRef || !userUid) return { error: "there was an error" }
+
+    const session = await auth();
+
+    const docRef = await addDoc(collection(db, "posts", postRef, "comments"), {
+        content,
+        timestamp: serverTimestamp(),
+        name: session.user.name,
+        username: session.user.username,
+        userId: session.user.uid,
+        profileImg: session.user.image,
+    })
+
+    if (image && image.size > 0) {
+        const storageRef = ref(storage, 'comments/' + docRef.id);
+        await uploadBytes(storageRef, image)
+        const url = await getDownloadURL(storageRef);
+        await updateDoc(docRef, {
+            image: url
+        })
+    }
+
+    revalidatePath('/app', 'layout')
+    return { success: true }
 }

@@ -2,35 +2,43 @@
 import { Divider, Modal, Timeline } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import PostFormClient from "./post-form-client";
+import { useFormState } from 'react-dom'
+import { createComment } from "@/actions/posts";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/firebase";
+import dayjs from "dayjs";
 
-const comments = [
-    {
-        username: "tannerhelms",
-        name: "Tanner Helms",
-        timeAgo: "5 Days ago",
-        content: 'this is comment'
-    },
-    {
-        username: "johnsmith",
-        name: "John Smith",
-        timeAgo: "2 Days ago",
-        content: 'Great post!'
-    },
-    {
-        username: "janedoe",
-        name: "Jane Doe",
-        timeAgo: "1 Day ago",
-        content: 'I completely agree!'
-    }
-]
 
 export function CommentButton({ post, user }) {
+    const [state, formAction] = useFormState(createComment.bind(null, [post.ref, user.uid]), {})
     const [opened, { open, close }] = useDisclosure(false);
     const textareaRef = useRef()
+    const [comments, setComments] = useState(null)
+    useEffect(() => {
+        onSnapshot(
+            collection(db, 'posts', post.ref, "comments"),
+            (snapshot) => {
+                var relativeTime = require('dayjs/plugin/relativeTime')
+                dayjs.extend(relativeTime)
+
+                let comments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                comments = comments.sort((a, b) => {
+                    return new Date(b.timestamp.toDate()) - new Date(a.timestamp.toDate())
+                })
+                comments.forEach(comment => {
+                    comment.timeAgo = dayjs(comment.timestamp.toDate()).fromNow()
+                })
+                setComments(comments)
+            }
+        )
+    }, [db, post])
+
+    if (comments === null) return null
+
     return (
         <>
             <Modal opened={opened} onClose={close} withCloseButton={false} padding={0}>
@@ -47,36 +55,45 @@ export function CommentButton({ post, user }) {
                                 <Timeline.Item
                                     key={index}
                                     title={(
-                                        <div className="flex space-x-3">
+                                        <div className="flex space-x-1 text-sm">
                                             <h4 className="font-bold">{comment.name}</h4>
                                             <p className="text-gray-500">@{comment.username}<span className="text-gray-500"> · {comment.timeAgo}</span></p>
+
                                         </div>
                                     )}
                                     bullet={
+                                        <Image className="rounded-full" src={comment.profileImg} height={30} width={30} alt="user profile" />
+                                    }
+                                >
+                                    <div className="flex flex-col space-y-2">
+                                        <h1>{comment.content}</h1>
+                                        {comment.image && (
+                                            <div className="relative h-52 rounded-xl">
+                                                <Image className="object-scale-down" src={comment.image} fill alt="comment image" />
+                                            </div>
+                                        )}
+                                    </div>
+                                </Timeline.Item>
+                            ))}
+                            <div className="">
+
+                                <Timeline.Item
+                                    title={(
+                                        <form className="w-full mt-4" action={formAction}>
+                                            <div className="w-full divide-y divide-gray-200">
+                                                <textarea name="content" ref={textareaRef} className="p-0 w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700" cols="30" rows="2" placeholder="What's happening?"></textarea>
+                                                <PostFormClient state={state} comment={true} />
+                                            </div>
+                                        </form>
+                                    )}
+                                    bullet={
                                         <div className="absoltue p-0 m-0">
-                                            <Image className="rounded-full" src={user.image} fill />
+                                            <Image className="rounded-full" src={user.image} height={30} width={30} alt="comment on post" />
                                         </div>
                                     }
                                 >
-                                    <h1>{comment.content}</h1>
                                 </Timeline.Item>
-                            ))}
-                            <Timeline.Item
-                                title={(
-                                    <form className="w-full">
-                                        <div className="w-full divide-y divide-gray-200">
-                                            <textarea name="content" ref={textareaRef} className="p-0 w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700" cols="30" rows="2" placeholder="What's happening?"></textarea>
-                                            <PostFormClient state={{ error: null }} comment={true} />
-                                        </div>
-                                    </form>
-                                )}
-                                bullet={
-                                    <div className="absoltue p-0 m-0">
-                                        <Image className="rounded-full" src={user.image} fill />
-                                    </div>
-                                }
-                            >
-                            </Timeline.Item>
+                            </div>
                         </Timeline>
                     </div>
                 </div>

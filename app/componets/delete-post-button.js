@@ -1,13 +1,13 @@
 'use client'
 
-import { deletePost } from "@/actions/posts"
-import { Button, Modal } from "@mantine/core";
+import { deletePost } from "@/actions/posts";
+import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useState } from "react";
-import { FaRegTrashAlt } from "react-icons/fa"
+import { FaRegTrashAlt } from "react-icons/fa";
 
-export function DeletePostButton({ post, user }) {
+export function DeletePostButton({ post }) {
     const [opened, { open, close }] = useDisclosure(false);
     const [loading, setLoading] = useState(false)
 

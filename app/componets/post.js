@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { FaRegCommentDots, FaRegHeart, FaRegTrashAlt } from "react-icons/fa";
 import { HiOutlineChartBar, HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoShareSocialOutline } from "react-icons/io5";
-import { LikePost } from "./like-post";
-import { DeletePostButton } from "./delete-post-button";
 import { CommentButton } from "./comment-button";
+import { DeletePostButton } from "./delete-post-button";
+import { LikePost } from "./like-post";
 
 export default function Post({ post, user }) {
     return (
