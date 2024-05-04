@@ -43,7 +43,7 @@ export function CommentButton({ post, user }) {
         <>
             <Modal opened={opened} onClose={close} withCloseButton={false} padding={0}>
                 <div className="flex flex-col">
-                    <div className="py-3 px-5">
+                    <div className="px-3">
                         <div className="hover:bg-gray-200 flex items-center justify-center rounded-full p-2 w-fit cursor-pointer">
                             <IoMdClose size="30px" />
                         </div>
@@ -98,8 +98,11 @@ export function CommentButton({ post, user }) {
                     </div>
                 </div>
             </Modal>
-            <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500" onClick={open}>
+            <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500 flex space-x-1" onClick={open}>
                 <FaRegCommentDots className="size-7 w-9 " />
+                {comments.length > 0 && (
+                    <span className="text-lg text-gray-500">{comments.length}</span>
+                )}
             </div>
         </>
     )
