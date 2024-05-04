@@ -10,7 +10,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoBookmarkOutline, IoClipboardOutline, IoHomeSharp, IoLockClosedOutline } from "react-icons/io5";
 import { PiDotsThreeCircleLight } from "react-icons/pi";
 const links = [
-    { text: "Home", Icon: IoHomeSharp, active: true, auth: false },
+    { text: "Home", Icon: IoHomeSharp, active: true, auth: false, link: "/app" },
     { text: "Explore", Icon: FaHashtag, auth: false },
     { text: "Notifications", Icon: FaRegBell, auth: true },
     { text: "Messages", Icon: GoInbox, auth: true },
@@ -18,7 +18,6 @@ const links = [
     { text: "Lists", Icon: IoClipboardOutline, auth: true },
     { text: "Profile", Icon: FiUser, auth: true },
     { text: "More", Icon: PiDotsThreeCircleLight, auth: true },
-
 ]
 
 export default async function Sidebar() {
@@ -36,7 +35,7 @@ export default async function Sidebar() {
                 {links.map((link, index) => {
                     const Icon = link.Icon;
                     if (!link.auth || user) {
-                        return <SidebarMenuIcon key={index} text={link.text} active={link.active}><Icon /></SidebarMenuIcon>
+                        return <SidebarMenuIcon key={index} text={link.text} active={link.active} link={link.link}><Icon /></SidebarMenuIcon>
                     } else {
                         return undefined;
                     }

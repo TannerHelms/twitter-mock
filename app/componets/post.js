@@ -4,8 +4,9 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { CommentButton } from "./comment-button";
 import { DeletePostButton } from "./delete-post-button";
 import { LikePost } from "./like-post";
+import Link from "next/link";
 
-export default function Post({ post, user }) {
+export default function Post({ post, user, detail = false }) {
     return (
         <div className="p-3 flex items-start space-x-3">
             {/* Profile Image */}
@@ -29,34 +30,37 @@ export default function Post({ post, user }) {
                 <div className="relative w-full h-full mt-2">
                     <Image
                         alt="post image"
-                        className="rounded-xl"
+                        className={`rounded-xl h-full w-full ${true && "!h-72 !w-auto"}`}
                         src={post.image}
                         width={0}
                         height={0}
                         sizes="100vw"
-                        style={{ width: '100%', height: 'auto' }} // optional
                     />
                 </div>
                 {/* Post Icons */}
-                <div className={`flex ${user ? "justify-between" : "m-auto w-fit space-x-4"} p-2 text-gray-500`}>
-                    {user && (
-                        <CommentButton post={post} user={user} />
-                    )}
-                    {user && post.userId === user.uid && (
-                        <DeletePostButton post={post} />
-                    )}
-                    {user && (
-                        <LikePost post={post} />
-                    )}
-                    <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
-                        <IoShareSocialOutline className="size-7 w-9" />
+                {!detail && (
+                    <div className={`flex ${user ? "justify-between" : "m-auto w-fit space-x-4"} p-2 text-gray-500`}>
+                        {user && (
+                            <CommentButton post={post} user={user} />
+                        )}
+                        {user && post.userId === user.uid && (
+                            <DeletePostButton post={post} />
+                        )}
+                        {user && (
+                            <LikePost post={post} />
+                        )}
+                        <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
+                            <IoShareSocialOutline className="size-7 w-9" />
+                        </div>
+                        <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
+                            <Link href={`/app/post/${post.ref}`}>
+                                <HiOutlineChartBar className="size-7 w-9" />
+                            </Link>
+                        </div>
                     </div>
-                    <div className="p-2 rounded-full hover:bg-sky-100 cursor-pointer hover:text-sky-500">
-                        <HiOutlineChartBar className="size-7 w-9" />
-                    </div>
-                </div>
+                )}
             </div>
-        </div >
+        </div>
     )
 }
 

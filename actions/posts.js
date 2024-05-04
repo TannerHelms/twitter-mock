@@ -4,7 +4,7 @@ import { auth } from "@/app/api/auth/[...nextauth]/route"
 import { db, storage } from "@/firebase"
 import dayjs from "dayjs"
 import { query } from "express"
-import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, serverTimestamp, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, serverTimestamp, setDoc, updateDoc } from "firebase/firestore"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { revalidatePath } from "next/cache"
 import { v4 as uuidv4 } from 'uuid';
@@ -121,4 +121,19 @@ export async function createComment(bind, _, formData) {
 
     revalidatePath('/app', 'layout')
     return { success: true }
+}
+
+export async function getPost(postRef) {
+    var relativeTime = require('dayjs/plugin/relativeTime')
+    dayjs.extend(relativeTime)
+    const docRef = doc(db, 'posts', postRef)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+        const post = docSnap.data()
+        post.ref = docSnap.id
+        post.timeAgo = dayjs(post.timestamp.toDate()).fromNow()
+        post.timestamp = null;
+        return post;
+    }
+    return null
 }
